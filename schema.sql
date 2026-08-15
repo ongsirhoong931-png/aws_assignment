@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS event-ticketing_db;
-USE event-ticketing_db;
+CREATE DATABASE IF NOT EXISTS event_ticketing_db;
+USE event_ticketing_db;
 
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
