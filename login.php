@@ -31,6 +31,11 @@ require 'partials/header.php';
 <h1>Login</h1>
 <?php if ($error): ?><p class="alert alert-error"><?= htmlspecialchars($error) ?></p><?php endif; ?>
 <form method="post">
+    <p style="text-align:right; margin-top:8px;">
+    <a href="forgot_password.php">
+        Forgot Password?
+    </a>
+</p>
 <label>Email <span class="required-mark">*</span> <input type="email" name="email" required></label>
 <label>Password <span class="required-mark">*</span>
 <div class="password-field">

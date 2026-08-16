@@ -138,3 +138,31 @@ CREATE TABLE sessions (
   last_activity INT NOT NULL,
   INDEX idx_last_activity (last_activity)
 );
+
+-- 1. Password reset tokens
+CREATE TABLE IF NOT EXISTS password_resets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    token VARCHAR(64) NOT NULL,
+    expires_at DATETIME NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX (token),
+    INDEX (email)
+);
+
+-- 2. Promo codes
+CREATE TABLE IF NOT EXISTS promo_codes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    discount_percent INT NOT NULL CHECK (discount_percent > 0 AND discount_percent <= 100),
+    max_uses INT DEFAULT 0, -- 0 for unlimited
+    used_count INT DEFAULT 0,
+    expires_at DATE NULL,
+    is_active TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Add security question and answer columns to users table
+ALTER TABLE users
+ADD COLUMN security_question VARCHAR(255) NULL,
+ADD COLUMN security_answer VARCHAR(255) NULL;

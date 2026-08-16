@@ -12,32 +12,125 @@ if ($selectedEvent) {
     $stmt->execute();
     $selected = $stmt->get_result()->fetch_assoc();
     $stmt->close();
+
     if ($selected && $selected['has_seating']) {
         header('Location: seat_select.php?event_id=' . $selectedEvent);
         exit;
     }
 }
 
-$events = $conn->query('SELECT *, (total_tickets - tickets_sold) AS remaining FROM events WHERE has_seating = 0 ORDER BY event_date');
+$events = $conn->query('
+    SELECT *,
+           (total_tickets - tickets_sold) AS remaining
+    FROM events
+    WHERE has_seating = 0
+    ORDER BY event_date
+');
 
 $pageTitle = 'Buy Tickets';
 require 'partials/header.php';
 ?>
+
 <div class="form-card">
-<h1>Buy Event Tickets</h1>
-<?php if ($error): ?><p class="alert alert-error"><?= htmlspecialchars($error) ?></p><?php endif; ?>
-<form method="post" action="payment.php">
-<label>Event
-<select name="event_id" required>
-<?php while ($e = $events->fetch_assoc()): ?>
-<?php $soldOut = $e['remaining'] <= 0; ?>
-<option value="<?= (int)$e['id'] ?>" <?= $e['id'] == $selectedEvent ? 'selected' : '' ?> <?= $soldOut ? 'disabled' : '' ?>><?= htmlspecialchars($e['event_name']) ?> - RM<?= number_format($e['ticket_price'], 2) ?> (<?= $soldOut ? 'Sold Out' : (int)$e['remaining'] . ' left' ?>)</option>
-<?php endwhile; ?>
-</select>
-</label>
-<label>Quantity <input type="number" name="quantity" min="1" value="1" required></label>
-<button type="submit">Continue to Payment</button>
-</form>
-<p><a class="btn btn-secondary btn-small" href="index.php">Back to home</a></p>
+
+    <h1>Buy Event Tickets</h1>
+
+    <?php if ($error): ?>
+        <p class="alert alert-error">
+            <?= htmlspecialchars($error) ?>
+        </p>
+    <?php endif; ?>
+
+    <form method="post" action="payment.php">
+
+        <!-- EVENT -->
+        <label>
+            Event
+
+            <select name="event_id" required>
+
+                <option value="">
+                    -- Select Event --
+                </option>
+
+                <?php while ($e = $events->fetch_assoc()): ?>
+
+                    <?php
+                    $soldOut = $e['remaining'] <= 0;
+                    ?>
+
+                    <option
+                        value="<?= (int)$e['id'] ?>"
+                        <?= $e['id'] == $selectedEvent ? 'selected' : '' ?>
+                        <?= $soldOut ? 'disabled' : '' ?>
+                    >
+
+                        <?= htmlspecialchars($e['event_name']) ?>
+
+                        -
+                        RM<?= number_format($e['ticket_price'], 2) ?>
+
+                        (
+                        <?= $soldOut
+                            ? 'Sold Out'
+                            : (int)$e['remaining'] . ' left'
+                        ?>
+                        )
+
+                    </option>
+
+                <?php endwhile; ?>
+
+            </select>
+
+        </label>
+
+
+        <!-- QUANTITY -->
+        <label>
+            Quantity
+
+            <input
+                type="number"
+                name="quantity"
+                min="1"
+                value="1"
+                required>
+        </label>
+
+
+        <!-- PROMO CODE -->
+        <label>
+            Promo Code
+            <span style="color:#718096; font-size:13px;">
+                (Optional)
+            </span>
+
+            <input
+                type="text"
+                name="promo_code"
+                placeholder="Enter promo code"
+                maxlength="50"
+                style="text-transform:uppercase;">
+        </label>
+
+
+        <!-- SUBMIT -->
+        <button type="submit">
+            Continue to Payment
+        </button>
+
+    </form>
+
+
+    <p>
+        <a
+            class="btn btn-secondary btn-small"
+            href="index.php">
+            Back to home
+        </a>
+    </p>
+
 </div>
+
 <?php require 'partials/footer.php'; ?>
