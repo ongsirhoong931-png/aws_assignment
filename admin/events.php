@@ -1,13 +1,21 @@
 <?php
-require '../config.php';
-require '../auth.php';
-require '../helpers.php';
+
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../auth.php';
+require_once __DIR__ . '/../helpers.php';
+
+/** @var mysqli $conn */
+
 require_admin();
 
 $flashError = $_SESSION['flash_error'] ?? null;
 unset($_SESSION['flash_error']);
 
-$events = $conn->query('SELECT *, (total_tickets - tickets_sold) AS remaining FROM events ORDER BY event_date');
+$events = $conn->query(
+    'SELECT *, (total_tickets - tickets_sold) AS remaining 
+     FROM events 
+     ORDER BY event_date'
+);
 
 $pageTitle = 'Manage Events';
 require 'partials/header.php';

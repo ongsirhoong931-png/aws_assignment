@@ -165,4 +165,10 @@ CREATE TABLE IF NOT EXISTS promo_codes (
 -- Add security question and answer columns to users table
 ALTER TABLE users
 ADD COLUMN security_question VARCHAR(255) NULL,
-ADD COLUMN security_answer VARCHAR(255) NULL;
+ADD COLUMN security_answer_hash VARCHAR(255) NULL;
+
+-- Add promo code columns to orders table
+ALTER TABLE orders
+ADD COLUMN promo_code VARCHAR(50) NULL,
+ADD COLUMN discount_percent DECIMAL(5,2) DEFAULT 0,
+ADD COLUMN discount_amount DECIMAL(10,2) DEFAULT 0;

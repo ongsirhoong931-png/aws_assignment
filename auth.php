@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/config.php';
 // Sessions are stored in the database (not local disk) so that any EC2
 // instance behind an ALB/ASG can read a session written by a different
 // instance - PHP's default file-based sessions only live on the instance
