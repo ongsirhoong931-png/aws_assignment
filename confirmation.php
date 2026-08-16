@@ -51,6 +51,15 @@ require 'partials/header.php';
 <tr><th>Total Paid</th><td>RM<?= number_format($order['total_price'], 2) ?></td></tr>
 </table>
 
+<div class="ticket-actions" style="margin-top: 20px; display: flex; gap: 10px;">
+    <a href="ticket_download.php?order_id=<?= $order['id'] ?>" target="_blank" class="btn btn-primary" style="padding: 10px 18px; text-decoration: none; background: #3182ce; color: #fff; border-radius: 6px;">
+        📄 Download PDF / Print Ticket
+    </a>
+    <a href="ticket_calender.php?order_id=<?= $order['id'] ?>" class="btn btn-secondary" style="padding: 10px 18px; text-decoration: none; background: #4a5568; color: #fff; border-radius: 6px;">
+        📅 Add to Calendar (.ics)
+    </a>
+</div>
+
 <div class="card-actions confirmation-actions">
 <a class="btn" href="index.php">View My Orders</a>
 <a class="btn btn-secondary" href="events.php">Browse More Events</a>

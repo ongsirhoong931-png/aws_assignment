@@ -26,6 +26,9 @@
 <a href="testimonials.php" class="<?= $currentPage === 'testimonials.php' ? 'active' : '' ?>">Testimonials</a>
 <a href="messages.php" class="<?= $currentPage === 'messages.php' ? 'active' : '' ?>">Messages</a>
 <a href="users.php" class="<?= $currentPage === 'users.php' ? 'active' : '' ?>">Users</a>
+<a href="analytics.php" class="<?= $currentPage === 'analytics.php' ? 'active' : '' ?>">Analytics</a>
+<a href="promo_codes.php" class="<?= $currentPage === 'promo_codes.php' ? 'active' : '' ?>">Promo Codes</a>
+<a href="export_attendees.php" class="<?= $currentPage === 'export_attendees.php' ? 'active' : '' ?>">Export Attendees</a>
 <a href="../logout.php">Logout</a>
 <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">&#9728;</button>
 </div>

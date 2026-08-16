@@ -122,4 +122,8 @@ require 'partials/header.php';
 <button type="submit">Change Password</button>
 </form>
 </div>
+<td>
+    <a href="ticket_download.php?order_id=<?= $order['id'] ?>" target="_blank" style="color: #3182ce; font-weight: bold;">Ticket</a> |
+    <a href="ticket_calender.php?order_id=<?= $order['id'] ?>" style="color: #4a5568;">Calendar</a>
+</td>
 <?php require 'partials/footer.php'; ?>

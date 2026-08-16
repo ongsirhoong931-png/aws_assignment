@@ -42,4 +42,7 @@ require 'partials/header.php';
 </form>
 <p>Don't have an account? <a href="register.php">Register here</a></p>
 </div>
+<div style="text-align: right; margin-top: 5px; margin-bottom: 15px;">
+    <a href="forgot_password.php" style="font-size: 13px; color: #3182ce;">Forgot Password?</a>
+</div>
 <?php require 'partials/footer.php'; ?>
