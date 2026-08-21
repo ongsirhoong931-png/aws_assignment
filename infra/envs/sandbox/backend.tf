@@ -9,9 +9,9 @@
 # create it with that same name in the bootstrap step. The DynamoDB lock table
 # name is only account-scoped, so "assignment-tf-lock" is fine as-is.
 terraform {
-   backend "s3" {
-     bucket = "assignment-tfstate-664349534700"
-     key    = "sandbox/terraform.tfstate"
-     region = "us-east-1"
-   }
- }
+  backend "s3" {
+    bucket = "assignment-tfstate-664349534700"
+    key    = "sandbox/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
