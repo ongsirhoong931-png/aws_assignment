@@ -13,6 +13,5 @@ terraform {
     bucket         = "assignment-tfstate-664349534700"
     key            = "sandbox/terraform.tfstate"
     region         = "us-east-1"
-    dynamodb_table = "assignment-tf-lock"
   }
 }
