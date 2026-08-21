@@ -2,9 +2,12 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
 require 'config.php';
 require 'auth.php';
 require 'helpers.php';
+
+/** @var mysqli $conn */
 
 $search = trim($_GET['q'] ?? '');
 
@@ -17,22 +20,34 @@ if ($search !== '') {
         ORDER BY event_date
     ');
 
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
+
     $likeSearch = '%' . $search . '%';
     $stmt->bind_param('s', $likeSearch);
     $stmt->execute();
 
-    $events = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $result = $stmt->get_result();
+    $events = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     $stmt->close();
-
 } else {
-
-    $events = $conn->query('
+    $result = $conn->query('
         SELECT *,
                (total_tickets - tickets_sold) AS remaining
         FROM events
         ORDER BY event_date
-    ')->fetch_all(MYSQLI_ASSOC);
+    ');
+
+    if ($result) {
+        $events = $result->fetch_all(MYSQLI_ASSOC);
+        $result->free();
+    } else {
+        die("Query failed: " . $conn->error);
+    }
 }
+
+$myOrders = [];
 
 
 $myOrders = [];
