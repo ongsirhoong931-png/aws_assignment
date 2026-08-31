@@ -19,7 +19,7 @@ resource "aws_s3_bucket_public_access_block" "uploads" {
   bucket = aws_s3_bucket.uploads.id
 
   block_public_acls       = true
-  ignore_public_acls       = true
+  ignore_public_acls      = true
   block_public_policy     = false
   restrict_public_buckets = false
 }
@@ -35,25 +35,6 @@ resource "aws_s3_bucket_policy" "public_read" {
         Principal = "*"
         Action    = "s3:GetObject"
         Resource  = "${aws_s3_bucket.uploads.arn}/${var.public_read_prefix}"
-      },
-      {
-        Sid       = "AllowEC2InstanceAppAccess"
-        Effect    = "Allow"
-        Principal = "*"
-        Action = [
-          "s3:GetObject",
-          "s3:PutObject",
-          "s3:ListBucket"
-        ]
-        Resource = [
-          aws_s3_bucket.uploads.arn,
-          "${aws_s3_bucket.uploads.arn}/*"
-        ]
-        Condition = {
-          ArnLike = {
-            "aws:PrincipalArn" = "arn:aws:iam::*:role/LabRole"
-          }
-        }
       }
     ]
   })
