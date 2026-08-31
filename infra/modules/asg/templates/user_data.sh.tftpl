@@ -45,10 +45,16 @@ else
     > /var/www/html/healthz.php
 fi
 
-+ mkdir -p /var/www/html/uploads
-+ chown -R apache:apache /var/www/html
-+ chmod -R 777 /var/www/html/uploads
-+
+mkdir -p /var/www/html/uploads
+chown -R apache:apache /var/www/html
+chmod -R 777 /var/www/html/uploads
+
+# Increase PHP upload limits to support image uploads larger than 2MB
+PHP_INI_PATH=$(php --ini | grep "Loaded Configuration File" | awk '{print $4}')
+if [ -f "$PHP_INI_PATH" ]; then
+    sed -i 's/^upload_max_filesize = .*/upload_max_filesize = 10M/' "$PHP_INI_PATH"
+    sed -i 's/^post_max_size = .*/post_max_size = 12M/' "$PHP_INI_PATH"
+fi
 
 systemctl enable httpd
 systemctl restart httpd
