@@ -45,5 +45,10 @@ else
     > /var/www/html/healthz.php
 fi
 
++ mkdir -p /var/www/html/uploads
++ chown -R apache:apache /var/www/html
++ chmod -R 777 /var/www/html/uploads
++
+
 systemctl enable httpd
 systemctl restart httpd
