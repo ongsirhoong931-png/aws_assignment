@@ -63,7 +63,7 @@ variable "secret_name" {
 variable "s3_bucket_name" {
   description = "Globally-unique bucket name for event image uploads."
   type        = string
-  default     = "assignment-s3-uploads-v3"
+  default     = "assignment-s3-uploads-v4"
 }
 
 variable "artifact_key" {
