@@ -10,7 +10,7 @@ resource "aws_s3_bucket" "uploads" {
   # db-init.yml's schema.sql/seed-db.sh. AWS refuses to delete a non-empty
   # bucket, so without force_destroy the destroy would fail on this resource.
   force_destroy = true
- object_lock_enabled = false # Wait, keep it disabled if possible or use lifecycle
+
   
 
 
@@ -21,6 +21,7 @@ resource "aws_s3_bucket" "uploads" {
 
 resource "aws_s3_bucket_public_access_block" "uploads" {
   bucket = aws_s3_bucket.uploads.id
+
 
   block_public_acls       = true
   ignore_public_acls      = true
