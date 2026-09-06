@@ -3,20 +3,12 @@
 # images render in the browser, without allowing public listing or writes.
 resource "aws_s3_bucket" "uploads" {
   bucket = var.bucket_name
-  
 
   # Sandbox environment: by the time you `terraform destroy`, this bucket will
   # contain uploaded event images, deploy.yml release artifacts, and
   # db-init.yml's schema.sql/seed-db.sh. AWS refuses to delete a non-empty
   # bucket, so without force_destroy the destroy would fail on this resource.
   force_destroy = true
-
-  lifecycle {
-    ignore_changes = [
-      object_lock_configuration,
-    ]
-  }
-
 
   tags = {
     Name = "${var.name_prefix}-s3-uploads"
@@ -25,7 +17,6 @@ resource "aws_s3_bucket" "uploads" {
 
 resource "aws_s3_bucket_public_access_block" "uploads" {
   bucket = aws_s3_bucket.uploads.id
-
 
   block_public_acls       = true
   ignore_public_acls      = true
