@@ -9,8 +9,8 @@ resource "aws_s3_bucket" "uploads" {
   # db-init.yml's schema.sql/seed-db.sh. AWS refuses to delete a non-empty
   # bucket, so without force_destroy the destroy would fail on this resource.
   force_destroy = true
-  
- 
+
+
 
   tags = {
     Name = "${var.name_prefix}-s3-uploads"
