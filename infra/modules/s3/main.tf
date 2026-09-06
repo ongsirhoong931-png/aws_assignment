@@ -10,6 +10,11 @@ resource "aws_s3_bucket" "uploads" {
   # bucket, so without force_destroy the destroy would fail on this resource.
   force_destroy = true
   
+  lifecycle {
+    ignore_changes = [
+      object_lock_configuration,
+    ]
+  }
 
   tags = {
     Name = "${var.name_prefix}-s3-uploads"
